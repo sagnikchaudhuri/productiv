@@ -15,7 +15,7 @@ python -m venv venv
 venv\Scripts\activate        # Windows
 source venv/bin/activate     # Mac/Linux
 pip install -r requirements.txt
-cp .env.example .env         # fill in ANTHROPIC_API_KEY and SECRET_KEY
+copy .env.example .env         # fill in ANTHROPIC_API_KEY and SECRET_KEY
 uvicorn main:app --reload
 ```
 API at http://localhost:8000 — docs at http://localhost:8000/docs
