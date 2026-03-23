@@ -3,39 +3,29 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import logging
 
-# ✅ Import your routers
 from app.api.routes import auth, chat, planner  # adjust if needed
 
-# ✅ Initialize app
-app = FastAPI(
-    title="Productiv API",
-    version="1.0.0"
-)
+app = FastAPI(title="Productiv API")
 
-# ✅ Logging (important for debugging)
 logging.basicConfig(level=logging.INFO)
 
-# ✅ CORS CONFIG (MULTI-USER SAFE)
 origins = [
-    "http://localhost:5173",  # local dev
-    "http://localhost:3000",  # optional
-    "https://productiv-eight.vercel.app",  # your deployed frontend
+    "http://localhost:5173",
+    "https://productiv-eight.vercel.app",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,   # NOT "*" in production
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ Health check route
 @app.get("/")
 def root():
-    return {"message": "Productiv API running 🚀"}
+    return {"message": "API running 🚀"}
 
-# ✅ Global error handler (prevents crashes)
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
     logging.error(f"ERROR: {exc}")
@@ -44,7 +34,6 @@ async def global_exception_handler(request, exc):
         content={"message": "Internal Server Error"}
     )
 
-# ✅ Include routers
-app.include_router(auth.router, prefix="/api", tags=["Auth"])
-app.include_router(chat.router, prefix="/api", tags=["Chat"])
-app.include_router(planner.router, prefix="/api", tags=["Planner"])
+app.include_router(auth.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
+app.include_router(planner.router, prefix="/api")
