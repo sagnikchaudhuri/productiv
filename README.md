@@ -27,3 +27,9 @@ npm install
 npm run dev
 ```
 App at http://localhost:5173
+
+<img width="1536" height="1024" alt="Productiv UI" src="https://github.com/user-attachments/assets/796d039b-badc-4cf3-8b31-fa359537aaca" />
+
+
+
+
