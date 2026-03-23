@@ -27,8 +27,12 @@ def chat(db, user, user_message):
     db.add(ChatMessage(user_id=user.id, role=MessageRole.user, content=user_message))
     db.commit()
     history = get_chat_history(db, user.id)
-    response = _client().messages.create(model=MODEL, max_tokens=400, system=SYSTEM, messages=history)
+    try:
+    response = _client().messages.create(...)
     reply = response.content[0].text
+except Exception as e:
+    print("Claude API Error:", e)
+    reply = "AI service temporarily unavailable"
     db.add(ChatMessage(user_id=user.id, role=MessageRole.assistant, content=reply))
     db.commit()
     return reply
@@ -44,8 +48,11 @@ def generate_insight(snapshot):
 def generate_plan(subjects, notes, goals, available_hours=8, plan_date=None):
     plan_date = plan_date or date.today().isoformat()
     prompt = json.dumps({"date": plan_date, "subjects": subjects, "notes": notes, "goals": goals, "available_hours": available_hours})
-    response = _client().messages.create(model=MODEL, max_tokens=1000, system=PLANNER_SYSTEM,
-        messages=[{"role": "user", "content": prompt}])
+    try:
+    response = _client().messages.create(...)
+except Exception as e:
+    print("Planner Error:", e)
+    return []
     raw = response.content[0].text.strip()
     if raw.startswith("```"): raw = raw.split("```")[1]; raw = raw[4:] if raw.startswith("json") else raw
     try:
