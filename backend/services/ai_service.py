@@ -6,7 +6,7 @@ from core.config import get_settings
 from models.chat import ChatMessage, MessageRole
 
 settings = get_settings()
-MODEL = "claude-sonnet-4-20250514"
+MODEL = "claude-3-sonnet-20240229"
 
 SYSTEM = """You are Productiv, an AI productivity assistant. Help users manage study schedules, habits, and goals.
 Be calm, encouraging, concise. Under 120 words unless asked for a plan. No markdown headers."""
