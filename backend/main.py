@@ -4,6 +4,17 @@ from core.config import get_settings
 from core.database import engine, Base
 import models
 from routers import auth, tasks, habits, ai, analytics
+import logging
+logging.basicConfig(level=logging.INFO)
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    print("ERROR:", exc)
+    return JSONResponse(
+        status_code=500,
+        content={"message": "Internal Server Error"}
+    )
 
 settings = get_settings()
 Base.metadata.create_all(bind=engine)
