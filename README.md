@@ -1,4 +1,4 @@
-# Productiv 🚀
+# Productiv 
 
 AI-powered productivity assistant — study planner, habit tracker, and smart AI coach.
 
