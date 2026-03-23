@@ -24,8 +24,12 @@ def get_chat_history(db, user_id, limit=20):
     return [{"role": m.role, "content": m.content} for m in reversed(msgs)]
 
 def chat(db, user, user_message):
-    db.add(ChatMessage(user_id=user.id, role=MessageRole.user, content=user_message))
+    try:
+    db.add(ChatMessage(...))
     db.commit()
+except Exception as e:
+    db.rollback()
+    print("DB Error:", e)
     history = get_chat_history(db, user.id)
     try:
     response = _client().messages.create(...)
